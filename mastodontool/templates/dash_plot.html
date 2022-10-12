@@ -1,0 +1,19 @@
+{%load plotly_dash%}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mastodon Statistics</title>
+	<style>
+		body {
+				background-color: #cceff0;
+			}
+	</style>
+	{% include "navbar.html" %}
+</head>
+<body>
+	<div style="padding:5px;">
+		<!-- Connect Plotly Dash with Django by ID mentioned in dash_app_code.py-->
+		{% plotly_app name='dash_integration_id' ratio=0.85 %}
+	</div>
+</body>
+</html>

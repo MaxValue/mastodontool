@@ -1,0 +1,218 @@
+{%load plotly_dash%}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ instanceinfo.name }}</title>
+    <style>
+		body {
+            background-color: #cceff0;
+            font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+			}
+            table, th, td {
+            border: 2px solid black;
+            border-collapse: collapse;
+            }
+            th, td {
+            text-align: left;
+            }
+            th {
+            background-color:black;
+            color:white;
+            }
+            table.general_info tr, table.general_info td, table.general_info th {
+            width: 220px;
+            text-align: center;
+            vertical-align: middle;
+            }
+            table.general_info tr {
+            height: 40px;
+            }
+            #container1 {
+            height: 450px;
+            }
+            .descrshort {
+            height: 450px;
+            }
+            .descrshort h2 {
+            margin: 5px;
+            width: 70%;
+            }
+            .graphuptime {
+            width: 200px;
+            float:right;
+            min-height: 500px;
+            }
+            #container2{
+            width:100%;
+            }
+            table {
+            margin-top: 30px;
+            font-size: 17px;
+            }
+            .bannedinfo {
+            float: left;
+            width: 45%;
+            }
+            .longdescr {
+            width: 800px;
+            }
+	</style>
+</head>
+<body>
+
+    <div id="container1">
+
+
+    <object data={{ instanceinfo.thumbnail }} type="image/png" style="float:left;height:450px;margin-right:1.5em;margin-bottom:10px;">
+        <img src={{ instanceinfo.thumbnail_proxy }} />
+       </object>
+
+
+    <div class="descrshort" style="background-color:#4c9e9e">
+        <h1>{{ instanceinfo.name }}</h1>
+        <h2 style="color:#A0B5B6">Short Description:</h2>
+        <h2 >{{ instanceinfo.info.short_description }}</h2>
+        
+        <div>
+            {% if graph %}
+            <div style="height:350px;width:400px;float:right;position:absolute;right: 0%;top:22px">
+            {{ graph|safe }}
+            {% endif %}
+            </div>
+        
+
+    </div>
+    </div>
+
+    <div id="container2">
+
+        
+
+        <div class="longdescr">
+            <h3> <p style="color:#A0B5B6;">Long Description: </p>{{ instanceinfo.info.full_description }}</h3>
+
+
+        <table class="general_info">
+            <tr>
+            <th>Active</th>
+            <th>Https_score</th>
+            <th>Users</th>
+            <th>Statuses</th>
+            <th>Connections</th>
+            <th>Open registration</th>
+            
+            </tr>
+            <tr>
+              <td>{{ instanceinfo.up }}</td>
+              <td>{{ instanceinfo.https_score }}</td>
+              <td>{{ instanceinfo.users }}</td>
+              <td>{{ instanceinfo.statuses }}</td>
+              <td>{{ instanceinfo.connections }}</td>
+              <td>{{ instanceinfo.open_registrations }}</td>                  
+            </tr>
+
+          </table>
+
+
+          <table  class="general_info">
+            <tr>
+                <th>Active Users</th>
+                <th>Topic</th>
+                <th>Categories</th>
+                <th>Languages</th>
+                <th>Accepts other languages</th>
+                <th>Federates with</th>
+            </tr>
+            <tr>
+              <td>{{ instanceinfo.active_users }}</td> 
+              <td>{{ instanceinfo.topic }}</td>
+              <td>{{ instanceinfo.categories }}</td>               
+              <td>
+              {% for lang in instanceinfo.languages %}
+              {{ lang }}; 
+              {% endfor %}
+              </td>
+              <td>{{ instanceinfo.other_languages_accepted }}</td>  
+              <td>{{ instanceinfo.federates_with }}</td> 
+            </tr>
+          </table>
+
+          
+
+          <table class="general_info">
+            <tr>
+                <th>Calculated Up-Time</th>
+                <th>Avg. Statuses per User</th>
+                <th>Avg. Connections per User</th>
+                <th>Avg. Response Time</th>
+            </tr>
+            <tr>
+                <td>{{ instanceinfo.calcuptime }}</td>
+                <td>{{ instanceinfo.status_per_user }}</td>
+                <td>{{ instanceinfo.connections_per_user }}</td>
+                <td>{{ instanceinfo.resp_time }}</td>
+            </tr>
+
+
+          </table>
+
+        </div>
+
+        
+
+        <div class="bannedinfo">
+            <table>
+                <tr>
+                    <th>Banned Instances</th>
+                    <td>
+                        {% for inst in instanceinfo.banned %}
+                        {{ inst }}; 
+                        {% endfor %}
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <th>Banned By</th>
+                    <td>
+                    {% for inst in instanceinfo.bannedby %}
+                    {{ inst }};  
+                    {% endfor %}
+                    </td>
+                </tr>
+    
+            </table>
+
+
+            <img src='/static/img/timeline.png' style="width:50%;float:right;position: absolute; right:0%; top:30%;" />
+
+            <p>____________________________________________________________________________________________________</p>
+
+            {% if instanceinfo.admin %}
+            <p style="color:#4a686c">Admin: {{ instanceinfo.admin }}</p>
+            {% endif %}
+            
+
+            {% if instanceinfo.email %}
+            <p style="color:#4a686c">Admin's Email: {{ instanceinfo.email }}</p>
+            {% endif %}
+            
+
+            
+
+        </div>
+
+        
+
+    </div>
+
+
+        
+        
+        
+    </div>
+          
+
+	</main>
+
+</body>
+</html>

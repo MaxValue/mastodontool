@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+   <meta charset="UTF-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <link href="{% static '/css/style.css' %}" rel="stylesheet">
+   <title>Document</title>
+ </head>
+ <body>
+   <nav class="navbar">
+     <!-- LOGO -->
+     <div class="logo"> <a href="/" style='color:#ffffff;text-decoration:none;font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;font-weight: bold;'>Mastodon Tool</a></div>
+     <!-- NAVIGATION MENU -->
+     <ul class="nav-links", style='list-style-type:none;font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;text-decoration:none;' >
+       <!-- NAVIGATION MENUS -->
+       <div class="menu">
+         <li><a href="/" style="text-decoration:none;">Home</a></li>
+         <li><a href="/dash_table" style="text-decoration:none;">Instances</a></li>
+         <li class="services">
+           <a href="/dash_plot" style="text-decoration:none;">Statistics</a>
+           <!-- DROPDOWN MENU -->
+         </li>
+         <li><a href="/about" style="text-decoration:none;">About</a></li>
+       </div>
+     </ul>
+   </nav>
+ </body>
+</html>
