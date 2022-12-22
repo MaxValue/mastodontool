@@ -2,7 +2,7 @@
 """
 Created on Sat Aug 13 17:09:36 2022
 
-@author: Lenovo
+@author: Dorina
 
 
 TO RUN: scrapy runspider scrapy.py
@@ -18,8 +18,8 @@ with open("alive", "rb") as fp:   # Unpickling
     b = pickle.load(fp)
     
     
-#conn = psycopg2.connect("dbname=dorina user=postgres password=1234")
-#cur = conn.cursor()
+conn = psycopg2.connect("dbname=dorina user=postgres password=1234")
+cur = conn.cursor()
 
 foundlist = []
  
@@ -63,8 +63,8 @@ class ScrapyTheSpider(scrapy.Spider):
             domain = '{uri.netloc}'.format(uri=parsed_uri)
             
             
-            #cur.execute("""INSERT INTO "banned" ("source", "banned") VALUES (%s, %s); """, (domain, servers['name']))
-            #conn.commit()
+            cur.execute("""INSERT INTO "banned" ("source", "banned") VALUES (%s, %s); """, (domain, servers['name']))
+            conn.commit()
     
 
 
