@@ -1,16 +1,22 @@
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc
+from dash import html
 import psycopg2
 import pandas as pd
 from django_plotly_dash import DjangoDash
 import requests
+from mastodontool import settings
 
 # Read plotly example dataframe to plot barchart
 import plotly.express as px
 
-conn = psycopg2.connect("dbname=dorina user=postgres password=1234")
-query = "SELECT * FROM uptime where status in (200, 400, 403, 404, 500, 503, 502)"
+conn = psycopg2.connect(
+    dbname=settings.DATABASES.get("default",{})["NAME"],
+    user=settings.DATABASES.get("default",{})["USER"],
+    password=settings.DATABASES.get("default",{})["PASSWORD"],
+    host=settings.DATABASES.get("default",{})["HOST"],
+)
+query = "SELECT * FROM uptime2 where status in (200, 400, 403, 404, 500, 503, 502)"
 
 url = 'https://instances.social/api/1.0/instances/list'
 key = 'Authorization: bearer xVyfYF0mSOnYS6Zlx34racvGlZwRxGKJsMAPYJndBpcyVCWOxrEUK6WZOg4r3Cmbboz1Jzkp9s2jibqYLQRNtCtKNGkqoA74e7O9TrWUuprX8dGlyrxrwa1Lrq8AKES0'

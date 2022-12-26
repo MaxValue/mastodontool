@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect
 import plotly.graph_objects as go
 import psycopg2
 import requests
+from mastodontool import settings
 
 mapping={'aa':'Afar','ab':'Abkhazian','af':'Afrikaans','ak':'Akan','am':'Amharic','an':'Aragonese','as':'Assamese','av':'Avaric','ay':'Aymara','az':'Azerbaijani','ay':'Aymara','ar':'Arabic','be':'Belarusian','bm':'Bambara','ba':'Bashkir','be':'Belarusian','bn':'Bengali','bi':'Bislama','bs':'Bosnian','br':'Breton','my':'Burmese','bg':'Bulgarian','eu':'Basque','ca':'Catalan','ce':'Chechen','cv':'Chuvash','cr':'Cree','co':'Corsican','cu':'ChurchSlavic','ch':'Chamorro','cs':'Czech','cy':'Welsh','da':'Danish','de':'German','dv':'Divehi','dz':'Dzongkha','ee':'Ewe','el':'Greek','en':'English','eo':'Esperanto','es':'Spanish','et':'Estonian','eu':'Basque','fa':'Persian','ff':'Fulah','fj':'Fijian','fo':'Faroese','fy':'WesternFrisian','fi':'Finnish','fr':'French','ga':'Irish','gd':'ScottishGaelic','gl':'Galician','gn':'Guarani','gu':'Gujarati','gv':'Manx','ha':'Hausa','he':'Hebrew','hi':'Hindi','ho':'HiriMotu','hr':'Croatian','ht':'Haitian','hu':'Hungarian','hy':'Armenian','hz':'Herero','ia':'Interlingua','ie':'Interlingue','ig':'Igbo','ii':'SichuanYi','ik':'Inupiaq','io':'Ido','iu':'Inuktitut','jv':'Javanese','ka':'Georgian','kg':'Kongo','kj':'Kuanyama','kk':'Kazakh','kl':'Kalaallisut','km':'CentralKhmer','kn':'Kannada','kr':'Kanuri','ks':'Kashmiri','ku':'Kurdish','kv':'Komi','kw':'Cornish','ky':'Kirghiz','la':'Latin','lb':'Luxembourgish','lg':'Ganda','li':'Limburgan','ln':'Lingala','lo':'Lao','mg':'Malagasy','mh':'Marshallese','mi':'Maori','ml':'Malayalam','mr':'Marathi','ms':'Malay','mt':'Maltese','my':'Burmese','na':'Nauru','nd':'NorthNdebele','ng':'Ndonga','no':'Norwegian','nr':'SouthNdebele','nv':'Navajo','ny':'Chichewa','oc':'Occitan','oj':'Ojibwa','om':'Oromo','or':'Oriya','os':'Ossetian','pa':'Punjabi','pi':'Pali','ps':'Pashto','qu':'Quechua','rm':'Romansh','rn':'Rundi','rw':'Kinyarwanda','sa':'Sanskrit','sc':'Sardinian','sd':'Sindhi','se':'NorthernSami','sg':'Sango','sh':'Serbo-Croatian','si':'Sinhala','sm':'Samoan','sn':'Shona','so':'Somali','ss':'Swati','st':'SouthernSotho','su':'Sundanese','sw':'Swahili','ta':'Tamil','te':'Telugu','tg':'Tajik','ti':'Tigrinya','tk':'Turkmen','tl':'Tagalog','tn':'Tswana','to':'Tonga','ts':'Tsonga','tt':'Tatar','tw':'Twi','ty':'Tahitian','ug':'Uighur','ur':'Urdu','uz':'Uzbek','ve':'Venda','vo':'Volapük','wa':'Walloon','wo':'Wolof','xh':'Xhosa','yo':'Yoruba','za':'Zhuang','zu':'Zulu','id':'Indonesian','is':'Icelandic','it':'Italian','ja':'Japanese','ko':'Korean','lt':'Lithuanian','lv':'Latvian','mk':'Macedonian','mn':'Mongolian','mo':'Moldavian','ne':'Nepali','nl':'Dutch','nn':'Norwegian','pl':'Polish','pt':'Portuguese','ro':'Romanian','ru':'Russian','sk':'Slovak','sl':'Slovenian','sq':'Albanian','sr':'Serbian','sv':'Swedish','th':'Thai','tr':'Turkish','uk':'Ukrainian','vi':'Vietnamese','yi':'Yiddish','zh':'Chinese'}
 
@@ -50,7 +51,12 @@ def instance_info(request):
             AttributeError
         
 
-        conn = psycopg2.connect("dbname=dorina user=postgres password=1234")
+        conn = psycopg2.connect(
+            dbname=settings.DATABASES.get("default",{})["NAME"],
+            user=settings.DATABASES.get("default",{})["USER"],
+            password=settings.DATABASES.get("default",{})["PASSWORD"],
+            host=settings.DATABASES.get("default",{})["HOST"],
+        )
 
         #query = "SELECT * FROM uptime where instance = '" + instanceinfo['name'] + "' and date < '2022-08-31' "
         #instanceseries = pd.read_sql_query(query, conn)

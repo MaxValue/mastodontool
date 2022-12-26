@@ -7,9 +7,14 @@ import plotly.graph_objs as go
 from django_plotly_dash import DjangoDash
 import pandas as pd
 import psycopg2
+from mastodontool import settings
 
-
-conn = psycopg2.connect("dbname=dorina user=postgres password=1234")
+conn = psycopg2.connect(
+    dbname=settings.DATABASES.get("default",{})["NAME"],
+    user=settings.DATABASES.get("default",{})["USER"],
+    password=settings.DATABASES.get("default",{})["PASSWORD"],
+    host=settings.DATABASES.get("default",{})["HOST"],
+)
 
 query = "SELECT * FROM uptime2"
 
@@ -18,7 +23,12 @@ instanceseries = pd.read_sql_query(query, conn)
 
 def dash_plotly_plot(instance):
 
-    conn = psycopg2.connect("dbname=dorina user=postgres password=1234")
+    conn = psycopg2.connect(
+        dbname=settings.DATABASES.get("default",{})["NAME"],
+        user=settings.DATABASES.get("default",{})["USER"],
+        password=settings.DATABASES.get("default",{})["PASSWORD"],
+        host=settings.DATABASES.get("default",{})["HOST"],
+    )
 
     query = "SELECT * FROM uptime2 where instance = '" + instance + "'"
 

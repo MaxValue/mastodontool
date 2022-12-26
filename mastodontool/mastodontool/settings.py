@@ -24,10 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-il5@egqmx6zre$(&*a0k@=(lf^v9iw#+^3^r(1xzql284%jf4='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    'fediscience.cosy.univie.ac.at',
+]
 
 # Application definition
 
@@ -87,8 +88,11 @@ WSGI_APPLICATION = 'mastodontool.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'service_mastodontool',
+        'USER': 'service_mastodontool',
+        # 'PASSWORD': 'YOUROWNDATABASEPASSWORD',
+        'HOST': 'localhost',
     }
 }
 

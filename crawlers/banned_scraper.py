@@ -12,13 +12,18 @@ import scrapy
 import pickle
 import psycopg2
 from urllib.parse import urlparse
-
+from mastodontool import settings
 
 with open("alive", "rb") as fp:   # Unpickling
     b = pickle.load(fp)
     
     
-conn = psycopg2.connect("dbname=dorina user=postgres password=1234")
+conn = psycopg2.connect(
+    dbname=settings.DATABASES.get("default",{})["NAME"],
+    user=settings.DATABASES.get("default",{})["USER"],
+    password=settings.DATABASES.get("default",{})["PASSWORD"],
+    host=settings.DATABASES.get("default",{})["HOST"],
+)
 cur = conn.cursor()
 
 foundlist = []
@@ -68,5 +73,5 @@ class ScrapyTheSpider(scrapy.Spider):
     
 
 
-#cur.close()
-#conn.close()
+cur.close()
+conn.close()
